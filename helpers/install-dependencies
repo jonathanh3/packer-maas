@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+# INSTALL DEPENDENCY FOR BUILDING VMS ON DEBIAN/UBUNTU
+
+kvm_path='/dev/kvm'
+
+if [ ! -e "$kvm_path" ]; then
+  echo -e "Error: The path '$kvm_path' does not exist.\n" \
+  "Your CPU does not support KVM extensions.\n" \
+  "KVM acceleration can NOT be used."
+  exit 1
+fi
+
+sudo apt install make qemu-utils libnbd-bin nbdkit fuse2fs qemu-system-x86
+
+# If you plan on running packer without sudo you will need to run: sudo usermod -aG kvm $(whoami)
